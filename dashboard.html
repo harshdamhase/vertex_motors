@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex Motors - Manufacturing Portal</title>
+
+<style>
+/* =========================================================
+   VERTEX MOTORS - DASHBOARD
+   SAME PROFESSIONAL THEME AS SALES ORDERS / PRODUCTS
+========================================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f3f6fa;
+    color: #1e293b;
+    min-height: 100vh;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+header {
+    height: 68px;
+    background: #0f2747;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 0 28px;
+    box-shadow: 0 2px 8px rgba(15, 39, 71, 0.20);
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: 700;
+    white-space: nowrap;
+    margin-right: 38px;
+}
+
+nav {
+    height: 68px;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    flex: 1;
+}
+
+nav a {
+    height: 68px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: .2s ease;
+}
+
+nav a:hover {
+    background: #163f6b;
+}
+
+nav a.active {
+    background: #23628f;
+    font-weight: 600;
+}
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 35px 28px;
+}
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.page-header h1 {
+    color: #102a43;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.page-header p {
+    color: #718096;
+    font-size: 14px;
+}
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.action-btn {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 11px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.action-btn:hover {
+    background: #1565c0;
+}
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 22px 25px;
+    min-height: 125px;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .05);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:nth-child(1) {
+    border-left: 4px solid #1976d2;
+}
+
+.card:nth-child(2) {
+    border-left: 4px solid #16a34a;
+}
+
+.card:nth-child(3) {
+    border-left: 4px solid #f59e0b;
+}
+
+.card:nth-child(4) {
+    border-left: 4px solid #7c3aed;
+}
+
+.card h3 {
+    color: #55708e;
+    font-size: 13px;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.card h2 {
+    color: #102a43;
+    font-size: 30px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.card span {
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+/* =========================================================
+   CONTENT GRID
+========================================================= */
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, .05);
+}
+
+.panel-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-header h2 {
+    color: #102a43;
+    font-size: 19px;
+}
+
+.panel-header p {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.panel-link {
+    color: #1769aa;
+    font-size: 12px;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.panel-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================================================
+   SALES ORDER TABLE
+========================================================= */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 14px 18px;
+    background: #f5f8fb;
+    color: #475569;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .3px;
+    border-bottom: 1px solid #dce3eb;
+}
+
+td {
+    padding: 15px 18px;
+    border-bottom: 1px solid #edf2f7;
+    color: #334155;
+    font-size: 13px;
+}
+
+tbody tr:hover {
+    background: #f8fbff;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.order-no {
+    color: #1769aa;
+    font-weight: 600;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.status.open {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.status.production {
+    background: #fff7ed;
+    color: #c2410c;
+}
+
+.status.completed {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status.released {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+/* =========================================================
+   INTEGRATION STATUS
+========================================================= */
+
+.integration-list {
+    padding: 5px 25px 15px;
+}
+
+.integration-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 17px 0;
+    border-bottom: 1px solid #edf2f7;
+    font-size: 13px;
+}
+
+.integration-row:last-child {
+    border-bottom: none;
+}
+
+.integration-name {
+    color: #334155;
+    font-weight: 500;
+}
+
+.connected {
+    background: #dcfce7;
+    color: #15803d;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+.sync-time {
+    color: #64748b;
+    font-size: 11px;
+}
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty {
+    padding: 35px 20px;
+    text-align: center;
+    color: #94a3b8;
+    font-size: 13px;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    margin-top: 30px;
+    background: #0f2747;
+    color: #a9bdd2;
+    text-align: center;
+    padding: 22px;
+    font-size: 12px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+    header {
+        padding: 0 18px;
+    }
+
+    .logo {
+        margin-right: 20px;
+    }
+
+    nav a {
+        padding: 0 10px;
+        font-size: 12px;
+    }
+
+    main {
+        padding: 25px 20px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    header {
+        height: auto;
+        min-height: 68px;
+        padding: 0 12px;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    nav a {
+        height: 68px;
+        padding: 0 9px;
+    }
+
+    .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .panel {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 650px;
+    }
+}
+</style>
+    <link rel="stylesheet" href="enhance.css">
+    <link rel="stylesheet1" href="dashboard.css">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">Vertex Motors</div>
+
+    <nav>
+          <a href="index.html" class="active">Dashboard</a>
+        <a href="customers.html">Customers</a>
+        <a href="items.html">Products</a>
+        <a href="salesorders.html">Sales Orders</a>
+        <a href="purchaseorders.html">Purchase Orders</a>
+        <a href="orderstatus.html">Order Status</a>
+   <a href="integration.html">Integration</a>
+          <a href="contact.html">Contact US</a>
+        </a>
+
+        <!-- <a href="production.html">Production</a>
+        <a href="integration.html">Integration</a> -->
+    </nav>
+</header>
+
+<section class="vx-fleet-hero">
+    <div class="vx-fleet-hero-text">
+        <!-- <span class="vx-fleet-kicker">Vertex Motors</span> -->
+        <!-- <h2>Built for dealers who move fast.</h2>
+        <p>Track customers, inventory and sales orders from one connected portal.</p> -->
+    </div>
+    <!-- <div class="vx-fleet-images">
+        <img src="vehicle-sedan.svg" alt="Sedan" class="vx-float vx-float-1">
+        <img src="vehicle-suv.svg" alt="SUV" class="vx-float vx-float-2">
+        <img src="vehicle-truck(1).svg" alt="Pickup truck" class="vx-float vx-float-3">
+        <img src="img/vehicle-coupe.svg" alt="Sports coupe" class="vx-float vx-float-4">
+    </div> -->
+</section>
+
+<main>
+
+    <section class="page-header">
+        <div>
+            <h1>Manufacturing Management Portal</h1>
+            <p>External business portal connected with Business Central</p>
+        </div>
+
+        <div class="quick-actions">
+            <a class="action-btn" href="customers.html">+ Add Customer</a>
+            <a class="action-btn" href="salesorders.html">+ Create Sales Order</a>
+        </div>
+    </section>
+
+    <section class="cards">
+
+        <div class="card">
+            <h3>Total Customers</h3>
+            <h2 id="totalCustomers">125</h2>
+            <span id="activeCustomerText">Active Customers</span>
+        </div>
+
+        <div class="card">
+            <h3>Total Products</h3>
+            <h2 id="totalProducts">0</h2>
+            <span>Spare Parts &amp; Products</span>
+        </div>
+
+        <div class="card">
+            <h3>Open Orders</h3>
+            <h2 id="openOrders">0</h2>
+            <span>Orders in Process</span>
+        </div>
+
+        <div class="card">
+            <h3>Production Orders</h3>
+            <h2 id="productionOrders">0</h2>
+            <span>Currently in Production</span>
+        </div>
+
+    </section>
+
+    <section class="content-grid">
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Recent Sales Orders</h2>
+                    <p>Latest sales orders created in the portal</p>
+                </div>
+
+                <a href="salesorders.html" class="panel-link">View All</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order No.</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody id="ordersBody">
+    <tr>
+        <td colspan="4" class="empty">
+            No sales orders created yet.
+        </td>
+    </tr>
+</tbody>
+            </table>
+
+        </div>
+
+
+        <div class="panel">
+
+            <div class="panel-header">
+                <div>
+                    <h2>Integration Status</h2>
+                    <p>System connectivity</p>
+                </div>
+
+                <a href="integration.html" class="panel-link">Details</a>
+            </div>
+
+            <div class="integration-list">
+
+                <div class="integration-row">
+                    <span class="integration-name">SQL Server</span>
+                    <strong class="connected">Connected</strong>
+                </div>
+
+                <div class="integration-row">
+                    <span class="integration-name">Power Automate</span>
+                    <strong class="connected">Connected</strong>
+                </div>
+
+                <div class="integration-row">
+                    <span class="integration-name">Business Central</span>
+                    <strong class="connected">Connected</strong>
+                </div>
+
+                <div class="integration-row">
+                    <span class="integration-name">Last Synchronization</span>
+                    <strong class="sync-time" id="syncTime">
+                        10-Sep-2026 10:30 AM
+                    </strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer>
+    Vertex Motors © 2026
+    <span>Manufacturing Management System</span>
+</footer>
+
+
+<script>
+/*
+=========================================================
+   DASHBOARD - LIVE DATA
+=========================================================
+   The Dashboard uses the same browser storage as the
+   Customers and Sales Orders pages.
+
+   Customers:
+       localStorage["customers"]
+
+   Sales Orders:
+       localStorage["salesOrders"]
+
+   If your Sales Orders page uses "orders" instead,
+   that key is also supported.
+=========================================================
+*/
+
+function readArray(key) {
+    try {
+        const value = JSON.parse(localStorage.getItem(key));
+        return Array.isArray(value) ? value : [];
+    } catch (error) {
+        return [];
+    }
+}
+
+
+/*
+=========================================================
+   GET SALES ORDERS
+=========================================================
+*/
+
+function getSalesOrders() {
+
+    const salesOrders = readArray("salesOrders");
+
+    if (salesOrders.length > 0) {
+        return salesOrders;
+    }
+
+    // Backup support if the Sales Orders page uses "orders".
+    return readArray("orders");
+}
+
+
+/*
+=========================================================
+   UPDATE DASHBOARD
+=========================================================
+*/
+
+function updateDashboard() {
+
+    /* -----------------------------------------------
+       CUSTOMERS
+    ------------------------------------------------ */
+
+    const customers = readArray("vertexCustomers");
+
+    const totalCustomers =
+        customers.length;
+
+    const activeCustomers =
+        customers.filter(function(customer) {
+
+            return String(
+                customer.Status ||
+                customer.status ||
+                ""
+            ).trim().toLowerCase() === "active";
+
+        }).length;
+
+
+    document.getElementById(
+        "totalCustomers"
+    ).textContent = totalCustomers;
+
+
+    document.getElementById(
+        "activeCustomerText"
+    ).textContent =
+        activeCustomers + " Active Customers";
+
+
+    /* -----------------------------------------------
+       PRODUCTS
+    ------------------------------------------------ */
+
+    /*
+       Support both possible names:
+       "products" and "items"
+    */
+
+    let products = readArray("products");
+
+    if (products.length === 0) {
+        products = readArray("items");
+    }
+
+    document.getElementById(
+        "totalProducts"
+    ).textContent = products.length;
+
+
+    /* -----------------------------------------------
+       SALES ORDERS
+    ------------------------------------------------ */
+
+    const salesOrders =
+        getSalesOrders();
+
+
+    /*
+       Count Open orders from actual orders.
+    */
+
+    const openOrders =
+        salesOrders.filter(function(order) {
+
+            const status =
+                String(order.status || "")
+                .trim()
+                .toLowerCase();
+
+            return status === "open";
+
+        }).length;
+
+
+    document.getElementById(
+        "openOrders"
+    ).textContent = openOrders;
+
+
+    /*
+       Show only orders actually created by the user.
+    */
+
+    displayRecentSalesOrders(
+        salesOrders
+    );
+
+
+    /* -----------------------------------------------
+       PRODUCTION ORDERS
+    ------------------------------------------------ */
+
+    const productionOrders =
+        readArray("productionOrders");
+
+
+    const activeProductionOrders =
+        productionOrders.filter(function(order) {
+
+            const status =
+                String(order.status || "")
+                .trim()
+                .toLowerCase();
+
+            return status !== "completed";
+
+        }).length;
+
+
+    document.getElementById(
+        "productionOrders"
+    ).textContent =
+        activeProductionOrders;
+}
+
+
+/*
+=========================================================
+   RECENT SALES ORDERS
+=========================================================
+*/
+
+function displayRecentSalesOrders(
+    salesOrders
+) {
+
+    const tableBody =
+        document.getElementById(
+            "ordersBody"
+        );
+
+
+    tableBody.innerHTML = "";
+
+
+    /*
+       No real sales orders yet.
+    */
+
+    if (
+        !Array.isArray(salesOrders) ||
+        salesOrders.length === 0
+    ) {
+
+        tableBody.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty">
+                    No sales orders created yet.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+
+    /*
+       Sort latest order first.
+
+       createdAt is preferred because it records
+       exactly when the order was created.
+    */
+
+    const recentOrders =
+        [...salesOrders]
+        .sort(function(a, b) {
+
+            const dateA =
+                new Date(
+                    a.createdAt ||
+                    a.orderDate ||
+                    a.date ||
+                    0
+                ).getTime();
+
+            const dateB =
+                new Date(
+                    b.createdAt ||
+                    b.orderDate ||
+                    b.date ||
+                    0
+                ).getTime();
+
+            return dateB - dateA;
+
+        })
+        .slice(0, 5);
+
+
+    recentOrders.forEach(
+        function(order) {
+
+            const row =
+                document.createElement("tr");
+
+
+            /*
+               Order number
+            */
+
+            const orderNo =
+                order.orderNo ||
+                order.salesOrderNo ||
+                order.documentNo ||
+                order.no ||
+                order.number ||
+                "-";
+
+
+            /*
+               Customer
+            */
+
+            let customerText = "-";
+
+
+            if (
+                order.customerNo &&
+                order.customerName
+            ) {
+
+                customerText =
+                    order.customerNo +
+                    " - " +
+                    order.customerName;
+
+            } else if (
+                order.customerName
+            ) {
+
+                customerText =
+                    order.customerName;
+
+            } else if (
+                order.customerNo
+            ) {
+
+                customerText =
+                    order.customerNo;
+
+            } else if (
+                order.customer
+            ) {
+
+                customerText =
+                    order.customer;
+
+            }
+
+
+            /*
+               Date
+            */
+
+            const date =
+                order.orderDate ||
+                order.date ||
+                order.createdAt ||
+                "-";
+
+
+            /*
+               Status
+            */
+
+            const status =
+                order.status ||
+                "Open";
+
+
+            const statusValue =
+                String(status)
+                .trim()
+                .toLowerCase();
+
+
+            let statusClass =
+                "open";
+
+
+            if (
+                statusValue === "production"
+            ) {
+                statusClass =
+                    "production";
+            }
+
+            else if (
+                statusValue === "completed"
+            ) {
+                statusClass =
+                    "completed";
+            }
+
+            else if (
+                statusValue === "released"
+            ) {
+                statusClass =
+                    "released";
+            }
+
+
+            row.innerHTML = `
+                <td class="order-no">
+                    ${escapeHtml(orderNo)}
+                </td>
+
+                <td>
+                    ${escapeHtml(customerText)}
+                </td>
+
+                <td>
+                    ${escapeHtml(date)}
+                </td>
+
+                <td>
+                    <span class="status ${statusClass}">
+                        ${escapeHtml(status)}
+                    </span>
+                </td>
+            `;
+
+
+            tableBody.appendChild(row);
+        }
+    );
+}
+
+
+/*
+=========================================================
+   SAFE HTML TEXT
+=========================================================
+*/
+
+function escapeHtml(value) {
+
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/*
+=========================================================
+   PAGE LOAD
+=========================================================
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        updateDashboard();
+
+    }
+);
+
+
+/*
+=========================================================
+   LIVE UPDATE
+
+   If Dashboard and another page are open in different
+   browser tabs, changing customers/orders triggers this
+   event automatically.
+=========================================================
+*/
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key === "vertexCustomers" ||
+            event.key === "customers" ||
+            event.key === "salesOrders" ||
+            event.key === "orders" ||
+            event.key === "products" ||
+            event.key === "items" ||
+            event.key === "productionOrders"
+        ) {
+
+            updateDashboard();
+
+        }
+
+    }
+);
+
+
+/*
+=========================================================
+   UPDATE WHEN RETURNING TO DASHBOARD
+=========================================================
+*/
+
+window.addEventListener(
+    "focus",
+    function() {
+
+        updateDashboard();
+
+    }
+);
+
+
+/*
+=========================================================
+   UPDATE WHEN TAB BECOMES VISIBLE
+=========================================================
+*/
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            document.visibilityState === "visible"
+        ) {
+
+            updateDashboard();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

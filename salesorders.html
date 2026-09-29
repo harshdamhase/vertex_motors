@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Orders - Vertex Motors</title>
+
+    <link rel="stylesheet" href="salesorders.css">
+     <link rel="stylesheet" href="enhance.css">
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="top-header">
+
+    <div class="brand">
+        Vertex Motors
+    </div>
+
+    <nav class="main-nav">
+  <a href="index.html" class="active">Dashboard</a>
+        <a href="customers.html">Customers</a>
+        <a href="items.html">Products</a>
+        <a href="salesorders.html">Sales Orders</a>
+        <a href="purchaseorders.html">Purchase Orders</a>
+        <a href="orderstatus.html">Order Status</a>
+   <a href="integration.html">Integration</a>
+          <a href="contact.html">Contact US</a>
+        </a>
+
+    </nav>
+
+</header>
+
+
+<!-- ================= MAIN ================= -->
+
+<main class="page-container">
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div>
+
+            <h1>Sales Orders</h1>
+
+            <p>
+                Manage customer sales orders and integration status
+            </p>
+
+        </div>
+
+        <button
+            class="btn btn-primary"
+            onclick="openCreateModal()"
+        >
+            + Create Sales Order
+        </button>
+
+    </section>
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <section class="summary-grid">
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Total Orders
+            </div>
+
+            <div
+                class="summary-value"
+                id="totalOrders"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Open Orders
+            </div>
+
+            <div
+                class="summary-value"
+                id="openOrders"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Pending Sync
+            </div>
+
+            <div
+                class="summary-value"
+                id="pendingOrders"
+            >
+                0
+            </div>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <div class="summary-label">
+                Released Orders
+            </div>
+
+            <div
+                class="summary-value"
+                id="releasedOrders"
+            >
+                0
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= SEARCH ================= -->
+
+    <section class="search-section">
+
+        <div class="search-box">
+
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search by Sales Order No. or Customer No."
+                oninput="renderOrders()"
+            >
+
+            <select
+                id="statusFilter"
+                onchange="renderOrders()"
+            >
+
+                <option value="">
+                    All Statuses
+                </option>
+
+                <option value="Open">
+                    Open
+                </option>
+
+                <option value="Released">
+                    Released
+                </option>
+
+                <option value="Cancelled">
+                    Cancelled
+                </option>
+
+            </select>
+
+
+            <button
+                class="btn btn-secondary"
+                onclick="clearSearch()"
+            >
+                Clear
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- ================= ORDER LIST ================= -->
+
+    <section class="table-card">
+
+        <div class="table-header">
+
+            <div>
+
+                <h2>
+                    Sales Order List
+                </h2>
+
+                <p>
+                    Orders created from the website will appear here
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="table-responsive">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Sales Order No.</th>
+
+                        <th>Customer No.</th>
+
+                        <th>Order Date</th>
+
+                        <th>Status</th>
+
+                        <th>Sync Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="orderTableBody">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    Vertex Motors Manufacturing Management System
+
+</footer>
+
+
+
+<!-- ================================================= -->
+<!-- CREATE SALES ORDER MODAL -->
+<!-- ================================================= -->
+
+<div
+    id="createModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Create Sales Order
+                </h2>
+
+                <p>
+                    Enter sales order information
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeCreateModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <form
+            id="salesOrderForm"
+            onsubmit="createSalesOrder(event)"
+        >
+
+
+            <div class="form-grid">
+
+
+                <!-- SALES ORDER NUMBER -->
+
+                <div class="form-group">
+
+                    <label for="salesOrderNo">
+                        Sales Order No.
+                    </label>
+
+                    <input
+                        type="text"
+                        id="salesOrderNo"
+                     
+                        required
+                    >
+
+                </div>
+
+
+                <!-- CUSTOMER -->
+
+                <div class="form-group">
+
+                    <label for="customerNo">
+                        Customer No.
+                    </label>
+
+                    <select
+                        id="customerNo"
+                        required
+                    >
+
+                        <option value="">
+                            Select customer
+                        </option>
+
+                        <option value="C1001">
+                            C1001 - Tata Motors
+                        </option>
+
+                        <option value="C1002">
+                            C1002 - Mahindra & Mahindra
+                        </option>
+
+                        <option value="C1003">
+                            C1003 - Ashok Leyland
+                        </option>
+
+                        <option value="C1004">
+                            C1004 - Bajaj Auto
+                        </option>
+
+                        <option value="C1005">
+                            C1005 - Metro Auto Ltd.
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- ORDER DATE -->
+
+                <div class="form-group">
+
+                    <label for="orderDate">
+                        Order Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="orderDate"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="form-group">
+
+                    <label for="orderStatus">
+                        Status
+                    </label>
+
+                    <select
+                        id="orderStatus"
+                        required
+                    >
+
+                        <option value="Open">
+                            Open
+                        </option>
+
+                        <option value="Released">
+                            Released
+                        </option>
+
+                        <option value="Cancelled">
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- INTEGRATION NOTE -->
+
+            <div class="integration-note">
+
+                <h3>
+                    Integration
+                </h3>
+
+                <p>
+                    After you create the sales order, it will be
+                    sent to Power Automate and stored in SQL.
+                    The order will initially have Pending sync status.
+                </p>
+
+            </div>
+
+
+            <!-- FOOTER -->
+
+            <div class="modal-footer">
+
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="closeCreateModal()"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="createButton"
+                >
+                    Create Sales Order
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- VIEW ORDER MODAL -->
+<!-- ================================================= -->
+
+<div
+    id="viewModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2>
+                    Sales Order Details
+                </h2>
+
+                <p>
+                    Sales order information
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-btn"
+                onclick="closeViewModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="details-grid">
+
+
+            <div>
+
+                <span>
+                    Sales Order No.
+                </span>
+
+                <strong id="viewSalesOrderNo">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Customer No.
+                </span>
+
+                <strong id="viewCustomerNo">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Order Date
+                </span>
+
+                <strong id="viewOrderDate">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Status
+                </span>
+
+                <strong id="viewStatus">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Sync Status
+                </span>
+
+                <strong id="viewSyncStatus">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    BC System ID
+                </span>
+
+                <strong id="viewBcSystemId">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Last Sync
+                </span>
+
+                <strong id="viewLastSync">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>
+                    Sync Error
+                </span>
+
+                <strong id="viewSyncError">
+                    -
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                type="button"
+                class="btn btn-secondary"
+                onclick="closeViewModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script>
+
+
+/*
+========================================================
+POWER AUTOMATE URL
+========================================================
+
+PASTE YOUR CURRENT POWER AUTOMATE HTTP TRIGGER URL HERE.
+
+Do not change anything else.
+*/
+
+const POWER_AUTOMATE_URL =
+    "https://e98edb130074e5d08d1e59167e58e9.dd.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/13/workflows/35c3ab036efc4deea89ed642391374ce/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=yNKXxsADT3OUX52H-Zt5l0Qc5uKHZbNPLDwKpKboA-0";
+
+
+/*
+========================================================
+LOCAL STORAGE
+========================================================
+*/
+
+const STORAGE_KEY =
+    "vertexSalesOrders";
+
+
+function getOrders() {
+
+    return JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+    );
+
+}
+
+
+function saveOrders(orders) {
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(orders)
+    );
+
+}
+
+
+/*
+========================================================
+OPEN CREATE MODAL
+========================================================
+*/
+
+function openCreateModal() {
+
+    document.getElementById(
+        "createModal"
+    ).style.display = "flex";
+
+
+    document.getElementById(
+        "salesOrderForm"
+    ).reset();
+
+
+    const today =
+        new Date()
+            .toISOString()
+            .split("T")[0];
+
+
+    document.getElementById(
+        "orderDate"
+    ).value = today;
+
+}
+
+
+/*
+========================================================
+CLOSE CREATE MODAL
+========================================================
+*/
+
+function closeCreateModal() {
+
+    document.getElementById(
+        "createModal"
+    ).style.display = "none";
+
+}
+
+
+/*
+========================================================
+CLOSE VIEW MODAL
+========================================================
+*/
+
+function closeViewModal() {
+
+    document.getElementById(
+        "viewModal"
+    ).style.display = "none";
+
+}
+
+
+/*
+========================================================
+CREATE SALES ORDER
+========================================================
+*/
+
+async function createSalesOrder(event) {
+
+    event.preventDefault();
+
+
+    const button =
+        document.getElementById(
+            "createButton"
+        );
+
+
+    const salesOrderNo =
+        document.getElementById(
+            "salesOrderNo"
+        ).value.trim();
+
+
+    const customerNo =
+        document.getElementById(
+            "customerNo"
+        ).value;
+
+
+    const orderDate =
+        document.getElementById(
+            "orderDate"
+        ).value;
+
+
+    const status =
+        document.getElementById(
+            "orderStatus"
+        ).value;
+
+
+    /*
+    -----------------------------------------
+    VALIDATION
+    -----------------------------------------
+    */
+
+    if (
+        !salesOrderNo ||
+        !customerNo ||
+        !orderDate ||
+        !status
+    ) {
+
+        alert(
+            "Please fill all required fields."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    -----------------------------------------
+    GET EXISTING ORDERS
+    -----------------------------------------
+    */
+
+    const orders =
+        getOrders();
+
+
+    /*
+    -----------------------------------------
+    DUPLICATE CHECK
+    -----------------------------------------
+    */
+
+    const duplicate =
+        orders.some(
+            order =>
+                order.SalesOrderNo
+                    .toLowerCase() ===
+                salesOrderNo
+                    .toLowerCase()
+        );
+
+
+    if (duplicate) {
+
+        alert(
+            "This Sales Order No. already exists."
+        );
+
+        return;
+
+    }
+
+
+    /*
+    -----------------------------------------
+    DATA SENT TO POWER AUTOMATE
+    -----------------------------------------
+    */
+
+    const payload = {
+
+        SalesOrderNo:
+            salesOrderNo,
+
+        CustomerNo:
+            customerNo,
+
+        OrderDate:
+            orderDate,
+
+        Status:
+            status
+
+    };
+
+
+    button.disabled = true;
+
+    button.textContent =
+        "Creating...";
+
+
+    try {
+
+
+        /*
+        -----------------------------------------
+        CALL POWER AUTOMATE
+        -----------------------------------------
+        */
+
+        const response =
+            await fetch(
+                POWER_AUTOMATE_URL,
+                {
+
+                    method: "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify(
+                            payload
+                        )
+
+                }
+            );
+
+
+        /*
+        -----------------------------------------
+        CHECK RESPONSE
+        -----------------------------------------
+        */
+
+        if (!response.ok) {
+
+            throw new Error(
+                "Power Automate returned HTTP " +
+                response.status
+            );
+
+        }
+
+
+        /*
+        -----------------------------------------
+        SAVE ORDER TO WEBSITE
+        -----------------------------------------
+        */
+
+        const newOrder = {
+
+            SalesOrderNo:
+                salesOrderNo,
+
+            CustomerNo:
+                customerNo,
+
+            OrderDate:
+                orderDate,
+
+            Status:
+                status,
+
+            SyncStatus:
+                "Pending",
+
+            BcSystemID:
+                "",
+
+            LastSyncDateTime:
+                "",
+
+            SyncErrorMessage:
+                ""
+
+        };
+
+
+        orders.unshift(
+            newOrder
+        );
+
+
+        saveOrders(
+            orders
+        );
+
+
+        /*
+        -----------------------------------------
+        REFRESH LIST
+        -----------------------------------------
+        */
+
+        renderOrders();
+
+
+        /*
+        -----------------------------------------
+        CLOSE FORM
+        -----------------------------------------
+        */
+
+        closeCreateModal();
+
+
+        alert(
+            "Sales Order created successfully."
+        );
+
+
+    }
+    catch (error) {
+
+
+        console.error(
+            "Sales Order Error:",
+            error
+        );
+
+
+        alert(
+            "Sales Order could not be created.\n\n" +
+            error.message
+        );
+
+
+    }
+    finally {
+
+
+        button.disabled = false;
+
+        button.textContent =
+            "Create Sales Order";
+
+    }
+
+}
+
+
+/*
+========================================================
+RENDER ORDERS
+========================================================
+*/
+
+function renderOrders() {
+
+
+    const tbody =
+        document.getElementById(
+            "orderTableBody"
+        );
+
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const statusFilter =
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+
+    const orders =
+        getOrders();
+
+
+    const filteredOrders =
+        orders.filter(
+            order => {
+
+
+                const matchesSearch =
+
+                    !search ||
+
+                    order.SalesOrderNo
+                        .toLowerCase()
+                        .includes(search) ||
+
+                    order.CustomerNo
+                        .toLowerCase()
+                        .includes(search);
+
+
+                const matchesStatus =
+
+                    !statusFilter ||
+
+                    order.Status ===
+                        statusFilter;
+
+
+                return (
+                    matchesSearch &&
+                    matchesStatus
+                );
+
+            }
+        );
+
+
+    tbody.innerHTML = "";
+
+
+    /*
+    -----------------------------------------
+    EMPTY STATE
+    -----------------------------------------
+    */
+
+    if (
+        filteredOrders.length === 0
+    ) {
+
+        tbody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty-state"
+                >
+
+                    <div class="empty-title">
+                        No sales orders yet
+                    </div>
+
+                    <div class="empty-text">
+                        Create a sales order to see it here.
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+
+    /*
+    -----------------------------------------
+    SHOW ORDERS
+    -----------------------------------------
+    */
+
+    else {
+
+
+        filteredOrders.forEach(
+            order => {
+
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+
+                        <strong>
+                            ${escapeHtml(
+                                order.SalesOrderNo
+                            )}
+                        </strong>
+
+                    </td>
+
+
+                    <td>
+
+                        ${escapeHtml(
+                            order.CustomerNo
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        ${formatDate(
+                            order.OrderDate
+                        )}
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status-badge
+                            ${getStatusClass(
+                                order.Status
+                            )}"
+                        >
+
+                            ${escapeHtml(
+                                order.Status
+                            )}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status-badge pending"
+                        >
+
+                            ${escapeHtml(
+                                order.SyncStatus ||
+                                "Pending"
+                            )}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="btn btn-small"
+                            onclick='viewOrder(
+                                ${JSON.stringify(order)}
+                            )'
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                `;
+
+
+                tbody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+
+    updateSummary(
+        orders
+    );
+
+}
+
+
+/*
+========================================================
+UPDATE SUMMARY
+========================================================
+*/
+
+function updateSummary(
+    orders
+) {
+
+
+    document.getElementById(
+        "totalOrders"
+    ).textContent =
+        orders.length;
+
+
+    document.getElementById(
+        "openOrders"
+    ).textContent =
+
+        orders.filter(
+            order =>
+                order.Status ===
+                "Open"
+        ).length;
+
+
+    document.getElementById(
+        "pendingOrders"
+    ).textContent =
+
+        orders.filter(
+            order =>
+                !order.SyncStatus ||
+                order.SyncStatus ===
+                "Pending"
+        ).length;
+
+
+    document.getElementById(
+        "releasedOrders"
+    ).textContent =
+
+        orders.filter(
+            order =>
+                order.Status ===
+                "Released"
+        ).length;
+
+}
+
+
+/*
+========================================================
+CLEAR SEARCH
+========================================================
+*/
+
+function clearSearch() {
+
+    document.getElementById(
+        "searchInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "statusFilter"
+    ).value = "";
+
+
+    renderOrders();
+
+}
+
+
+/*
+========================================================
+VIEW ORDER
+========================================================
+*/
+
+function viewOrder(
+    order
+) {
+
+
+    document.getElementById(
+        "viewSalesOrderNo"
+    ).textContent =
+        order.SalesOrderNo || "-";
+
+
+    document.getElementById(
+        "viewCustomerNo"
+    ).textContent =
+        order.CustomerNo || "-";
+
+
+    document.getElementById(
+        "viewOrderDate"
+    ).textContent =
+        formatDate(
+            order.OrderDate
+        );
+
+
+    document.getElementById(
+        "viewStatus"
+    ).textContent =
+        order.Status || "-";
+
+
+    document.getElementById(
+        "viewSyncStatus"
+    ).textContent =
+        order.SyncStatus || "Pending";
+
+
+    document.getElementById(
+        "viewBcSystemId"
+    ).textContent =
+        order.BcSystemID || "-";
+
+
+    document.getElementById(
+        "viewLastSync"
+    ).textContent =
+        order.LastSyncDateTime || "-";
+
+
+    document.getElementById(
+        "viewSyncError"
+    ).textContent =
+        order.SyncErrorMessage || "-";
+
+
+    document.getElementById(
+        "viewModal"
+    ).style.display = "flex";
+
+}
+
+
+/*
+========================================================
+DATE FORMAT
+========================================================
+*/
+
+function formatDate(
+    dateString
+) {
+
+    if (!dateString) {
+
+        return "-";
+
+    }
+
+
+    const parts =
+        dateString.split("-");
+
+
+    if (
+        parts.length === 3
+    ) {
+
+        return (
+            parts[2] +
+            "/" +
+            parts[1] +
+            "/" +
+            parts[0]
+        );
+
+    }
+
+
+    return dateString;
+
+}
+
+
+/*
+========================================================
+STATUS CLASS
+========================================================
+*/
+
+function getStatusClass(
+    status
+) {
+
+    if (
+        status === "Released"
+    ) {
+
+        return "released";
+
+    }
+
+
+    if (
+        status === "Cancelled"
+    ) {
+
+        return "cancelled";
+
+    }
+
+
+    return "open";
+
+}
+
+
+/*
+========================================================
+HTML ESCAPE
+========================================================
+*/
+
+function escapeHtml(
+    value
+) {
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
+
+/*
+========================================================
+CLOSE MODAL OUTSIDE CLICK
+========================================================
+*/
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+
+        if (
+            event.target ===
+            document.getElementById(
+                "createModal"
+            )
+        ) {
+
+            closeCreateModal();
+
+        }
+
+
+        if (
+            event.target ===
+            document.getElementById(
+                "viewModal"
+            )
+        ) {
+
+            closeViewModal();
+
+        }
+
+    }
+);
+
+
+/*
+========================================================
+LOAD PAGE
+========================================================
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        renderOrders();
+
+    }
+);
+
+</script>
+
+</body>
+</html>

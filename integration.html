@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Integration - Vertex Motors</title>
+
+    <link
+        rel="stylesheet"
+        href="integration.css"
+    >
+ <link rel="stylesheet" href="enhance.css">
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="top-header">
+
+    <div class="brand">
+        Vertex Motors
+    </div>
+
+
+    <nav class="main-nav">       
+     <a href="index.html" class="active">Dashboard</a>
+        <a href="customers.html">Customers</a>
+        <a href="items.html">Products</a>
+        <a href="salesorders.html">Sales Orders</a>
+        <a href="purchaseorders.html">Purchase Orders</a>
+        <a href="orderstatus.html">Order Status</a>
+   <a href="integration.html">Integration</a>
+          <a href="contact.html">Contact US</a>
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="page-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <section class="page-header">
+
+        <div>
+
+            <h1>
+                Integration
+            </h1>
+
+            <p>
+                Monitor data synchronization between the portal,
+                SQL Server, Power Automate and Business Central.
+            </p>
+
+        </div>
+
+
+        <button
+            class="btn btn-primary"
+            onclick="refreshIntegration()"
+        >
+            Refresh Status
+        </button>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INTEGRATION ARCHITECTURE
+    ================================================= -->
+
+    <section class="integration-card">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Integration Architecture
+                </h2>
+
+                <p>
+                    Current system integration flow
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="architecture">
+
+
+            <!-- WEBSITE -->
+
+            <div class="system-box">
+
+
+                <div class="system-icon">
+                    W
+                </div>
+
+
+                <h3>
+                    Business Portal
+                </h3>
+
+
+                <p>
+                    External Website
+                </p>
+
+
+                <span class="connection-status connected">
+                    Connected
+                </span>
+
+
+            </div>
+
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+
+            <!-- POWER AUTOMATE -->
+
+            <div class="system-box">
+
+
+                <div class="system-icon">
+                    PA
+                </div>
+
+
+                <h3>
+                    Power Automate
+                </h3>
+
+
+                <p>
+                    Integration Layer
+                </p>
+
+
+                <span class="connection-status connected">
+                    Connected
+                </span>
+
+
+            </div>
+
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+
+            <!-- SQL -->
+
+            <div class="system-box">
+
+
+                <div class="system-icon">
+                    SQL
+                </div>
+
+
+                <h3>
+                    SQL Server
+                </h3>
+
+
+                <p>
+                    VertexMotors Database
+                </p>
+
+
+                <span class="connection-status connected">
+                    Connected
+                </span>
+
+
+            </div>
+
+
+
+            <div class="arrow">
+                →
+            </div>
+
+
+
+            <!-- BC -->
+
+            <div class="system-box">
+
+
+                <div class="system-icon">
+                    BC
+                </div>
+
+
+                <h3>
+                    Business Central
+                </h3>
+
+
+                <p>
+                    ERP System
+                </p>
+
+
+                <span class="connection-status connected">
+                    Connected
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         CONNECTION STATUS
+    ================================================= -->
+
+    <section class="integration-card">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Connection Status
+                </h2>
+
+                <p>
+                    Current connectivity of integrated systems
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="connection-list">
+
+
+            <!-- SQL -->
+
+            <div class="connection-row">
+
+
+                <div class="connection-info">
+
+                    <div class="connection-title">
+                        SQL Server
+                    </div>
+
+                    <div class="connection-detail">
+                        ASPL72\SQLBC280
+                    </div>
+
+                </div>
+
+
+                <span
+                    id="sqlStatus"
+                    class="status-badge connected"
+                >
+                    Connected
+                </span>
+
+
+            </div>
+
+
+
+            <!-- POWER AUTOMATE -->
+
+            <div class="connection-row">
+
+
+                <div class="connection-info">
+
+                    <div class="connection-title">
+                        Power Automate
+                    </div>
+
+                    <div class="connection-detail">
+                        Customer and Sales Order integration
+                    </div>
+
+                </div>
+
+
+                <span
+                    id="powerAutomateStatus"
+                    class="status-badge connected"
+                >
+                    Connected
+                </span>
+
+
+            </div>
+
+
+
+            <!-- BUSINESS CENTRAL -->
+
+            <div class="connection-row">
+
+
+                <div class="connection-info">
+
+                    <div class="connection-title">
+                        Business Central
+                    </div>
+
+                    <div class="connection-detail">
+                        ERP and manufacturing system
+                    </div>
+
+                </div>
+
+
+                <span
+                    id="bcStatus"
+                    class="status-badge connected"
+                >
+                    Connected
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         SYNCHRONIZATION SUMMARY
+    ================================================= -->
+
+    <section class="summary-grid">
+
+
+        <!-- <div class="summary-card blue">
+
+            <div class="summary-label">
+                Customers
+            </div>
+
+            <div
+                class="summary-value"
+                id="customerSyncCount"
+            >
+                0
+            </div>
+
+            <div class="summary-description">
+                Records processed
+            </div>
+
+        </div> -->
+
+
+<!-- 
+        <div class="summary-card green">
+
+            <div class="summary-label">
+                Products
+            </div>
+
+            <div
+                class="summary-value"
+                id="productSyncCount"
+            >
+                0
+            </div>
+
+            <div class="summary-description">
+                Records processed
+            </div>
+
+        </div> -->
+
+
+<!-- 
+        <div class="summary-card orange">
+
+            <div class="summary-label">
+                Sales Orders
+            </div>
+
+            <div
+                class="summary-value"
+                id="salesOrderSyncCount"
+            >
+                0
+            </div>
+
+            <div class="summary-description">
+                Orders processed
+            </div>
+
+        </div>
+ -->
+<!-- 
+
+        <div class="summary-card red">
+
+            <div class="summary-label">
+                Failed Records
+            </div>
+
+            <div
+                class="summary-value"
+                id="failedCount"
+            >
+                0
+            </div>
+
+            <div class="summary-description">
+                Require attention
+            </div>
+
+        </div> -->
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         SYNCHRONIZATION STATUS
+    ================================================= -->
+
+    <section class="integration-card">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Synchronization Status
+                </h2>
+
+                <p>
+                    Data flow between external systems
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="sync-table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ENTITY
+                        </th>
+
+                        <th>
+                            SOURCE
+                        </th>
+
+                        <th>
+                            TARGET
+                        </th>
+
+                        <th>
+                            STATUS
+                        </th>
+
+                        <th>
+                            LAST SYNC
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr>
+
+                        <td>
+                            Customers
+                        </td>
+
+                        <td>
+                            Website / SQL
+                        </td>
+
+                        <td>
+                            Business Central
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge pending">
+                                Pending
+                            </span>
+
+                        </td>
+
+                        <td>
+                            -
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            Products / Spare Parts
+                        </td>
+
+                        <td>
+                            SQL
+                        </td>
+
+                        <td>
+                            Business Central
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge pending">
+                                Pending
+                            </span>
+
+                        </td>
+
+                        <td>
+                            -
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            Sales Orders
+                        </td>
+
+                        <td>
+                            Website / BC
+                        </td>
+
+                        <td>
+                            SQL
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge pending">
+                                Pending
+                            </span>
+
+                        </td>
+
+                        <td>
+                            -
+                        </td>
+
+                    </tr>
+
+
+
+                    <tr>
+
+                        <td>
+                            Sales Order Status
+                        </td>
+
+                        <td>
+                            Business Central
+                        </td>
+
+                        <td>
+                            SQL
+                        </td>
+
+                        <td>
+
+                            <span class="status-badge pending">
+                                Pending
+                            </span>
+
+                        </td>
+
+                        <td>
+                            -
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         INTEGRATION FLOW
+    ================================================= -->
+
+    <section class="integration-card">
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h2>
+                    Data Flow
+                </h2>
+
+                <p>
+                    Direction of information movement
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="flow-list">
+
+
+            <div class="flow-item">
+
+                <div class="flow-number">
+                    1
+                </div>
+
+                <div>
+
+                    <h3>
+                        Customer Creation
+                    </h3>
+
+                    <p>
+                        Website → Power Automate → SQL Server
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="flow-item">
+
+                <div class="flow-number">
+                    2
+                </div>
+
+                <div>
+
+                    <h3>
+                        Product / Spare Part Synchronization
+                    </h3>
+
+                    <p>
+                        SQL Server → Power Automate → Business Central
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="flow-item">
+
+                <div class="flow-number">
+                    3
+                </div>
+
+                <div>
+
+                    <h3>
+                        Sales Order Creation
+                    </h3>
+
+                    <p>
+                        Website → Power Automate → SQL Server
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="flow-item">
+
+                <div class="flow-number">
+                    4
+                </div>
+
+                <div>
+
+                    <h3>
+                        Sales Order Status
+                    </h3>
+
+                    <p>
+                        Business Central → Power Automate → SQL Server
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+
+    <!-- =================================================
+         LAST SYNCHRONIZATION
+    ================================================= -->
+
+    <section class="last-sync-card">
+
+
+        <div>
+
+            <span class="last-sync-label">
+                Last Synchronization
+            </span>
+
+
+            <strong
+                id="lastSynchronization"
+            >
+                No synchronization recorded
+            </strong>
+
+        </div>
+
+
+        <div class="sync-indicator">
+
+            <span class="pulse">
+            </span>
+
+            System Monitoring
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const SALES_ORDER_KEY =
+    "vertexSalesOrders";
+
+
+
+/* =====================================================
+   READ SALES ORDERS
+===================================================== */
+
+function getSalesOrders() {
+
+    try {
+
+        return JSON.parse(
+
+            localStorage.getItem(
+                SALES_ORDER_KEY
+            ) || "[]"
+
+        );
+
+    }
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+
+/* =====================================================
+   UPDATE INTEGRATION COUNTS
+===================================================== */
+
+function updateIntegrationCounts() {
+
+
+    const salesOrders =
+        getSalesOrders();
+
+
+    const salesOrderCount =
+        salesOrders.length;
+
+
+    const failedOrders =
+        salesOrders.filter(
+
+            function(order) {
+
+                const status =
+                    String(
+
+                        order.SyncStatus ||
+                        order.syncStatus ||
+                        ""
+
+                    )
+                    .toLowerCase();
+
+
+                return status === "failed";
+
+            }
+
+        ).length;
+
+
+
+    document.getElementById(
+        "salesOrderSyncCount"
+    ).textContent =
+        salesOrderCount;
+
+
+    document.getElementById(
+        "failedCount"
+    ).textContent =
+        failedOrders;
+
+
+
+    /*
+       Customer/Product counts can later be connected
+       directly to SQL/Power Automate.
+    */
+
+    document.getElementById(
+        "customerSyncCount"
+    ).textContent =
+        localStorage.getItem(
+            "vertexCustomerCount"
+        ) || "0";
+
+
+    document.getElementById(
+        "productSyncCount"
+    ).textContent =
+        localStorage.getItem(
+            "vertexProductCount"
+        ) || "0";
+
+}
+
+
+
+/* =====================================================
+   REFRESH
+===================================================== */
+
+function refreshIntegration() {
+
+
+    updateIntegrationCounts();
+
+
+    const now =
+        new Date();
+
+
+    document.getElementById(
+        "lastSynchronization"
+    ).textContent =
+
+        now.toLocaleDateString(
+            "en-IN"
+        ) +
+        " " +
+        now.toLocaleTimeString(
+            "en-IN",
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+}
+
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        updateIntegrationCounts();
+
+    }
+);
+
+
+
+/* =====================================================
+   AUTO REFRESH
+===================================================== */
+
+window.addEventListener(
+    "focus",
+    function() {
+
+        updateIntegrationCounts();
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            document.visibilityState ===
+            "visible"
+        ) {
+
+            updateIntegrationCounts();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

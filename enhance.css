@@ -1,0 +1,332 @@
+/* =========================================================
+   VERTEX MOTORS - DESIGN SYSTEM LAYER
+   Loaded on every page, on top of each page's own styles.
+   A single, cohesive visual identity + motion layer:
+   refined palette, elevation, typography and hover/focus
+   feedback across nav, buttons, cards, tables and forms.
+========================================================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend:wght@600;700;800&display=swap');
+
+:root {
+    --vx-navy: #0f2747;
+    --vx-navy-2: #14335c;
+    --vx-navy-3: #1b4373;
+    --vx-blue: #1976d2;
+    --vx-blue-dark: #135ba1;
+    --vx-blue-light: #eaf3fc;
+    --vx-gold: #f0b429;
+    --vx-gold-dark: #d99a0e;
+    --vx-green: #16a34a;
+    --vx-green-light: #e7f8ee;
+    --vx-amber: #f59e0b;
+    --vx-amber-light: #fff6e0;
+    --vx-red: #dc2626;
+    --vx-red-light: #fdecec;
+    --vx-ink: #102a43;
+    --vx-slate: #55708e;
+    --vx-slate-light: #829ab1;
+    --vx-line: #e2e8f0;
+    --vx-bg: #f3f6fa;
+    --vx-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --vx-shadow-sm: 0 2px 8px rgba(15, 39, 71, 0.06);
+    --vx-shadow-md: 0 8px 22px rgba(15, 39, 71, 0.10);
+    --vx-shadow-lg: 0 16px 40px rgba(15, 39, 71, 0.16);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Inter", "Segoe UI", Arial, sans-serif !important;
+    -webkit-font-smoothing: antialiased;
+    background:
+        radial-gradient(1100px 420px at 100% -8%, rgba(25, 118, 210, 0.07), transparent 60%),
+        radial-gradient(900px 380px at -8% 0%, rgba(15, 39, 71, 0.05), transparent 55%),
+        var(--vx-bg) !important;
+}
+
+h1, h2, h3, .page-header h1, .header h1 {
+    font-family: "Lexend", "Inter", sans-serif !important;
+    letter-spacing: -0.01em;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { height: 10px; width: 10px; }
+::-webkit-scrollbar-track { background: #eef2f7; }
+::-webkit-scrollbar-thumb { background: #b7c6d9; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #8fa6c2; }
+
+/* Visible keyboard focus everywhere */
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+    outline: 2px solid var(--vx-blue) !important;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
+}
+
+/* =========================================================
+   HEADER / NAVIGATION
+   Subtle depth gradient + gold rule + animated underline
+========================================================= */
+
+.navbar, .main-nav, .header, .top-header,
+header, div.navbar {
+    background: linear-gradient(180deg, var(--vx-navy-3) 0%, var(--vx-navy) 78%) !important;
+    box-shadow: var(--vx-shadow-md) !important;
+    position: relative;
+}
+
+.navbar::after, .main-nav::after, .top-header::after, header::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--vx-gold), transparent 65%);
+    opacity: .8;
+}
+
+.navbar a, .main-nav a, nav a {
+    position: relative;
+    transition: color .2s var(--vx-ease), background-color .2s var(--vx-ease);
+}
+
+.navbar a::after, .main-nav a::after {
+    content: "";
+    position: absolute;
+    left: 16px; right: 16px; bottom: 6px;
+    height: 2px;
+    background: var(--vx-gold);
+    border-radius: 2px;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .25s var(--vx-ease);
+}
+
+.navbar a:hover::after, .main-nav a:hover::after,
+.navbar a.active::after, .main-nav a.active::after {
+    transform: scaleX(1);
+}
+
+.navbar a.active, .main-nav a.active {
+    background: rgba(255, 255, 255, 0.10) !important;
+}
+
+.logo, .brand {
+    font-family: "Lexend", "Inter", sans-serif !important;
+    letter-spacing: -0.01em;
+    transition: opacity .2s ease;
+}
+.logo:hover, .brand:hover { opacity: 0.88; }
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+button, .btn, .add-btn, .primary-button, .btn-primary, .add-button,
+.save-btn, .save-button, .search-btn, .search-button, .submit-btn,
+.cancel-btn, .cancel-button, .clear-btn, .clear-button,
+.view-btn, .view-button, .btn-small, .btn-secondary {
+    transition: transform .18s var(--vx-ease), box-shadow .18s var(--vx-ease),
+                background-color .18s var(--vx-ease), filter .18s var(--vx-ease),
+                border-color .18s var(--vx-ease) !important;
+}
+
+.add-btn, .primary-button, .btn-primary, .add-button,
+.save-btn, .save-button, .search-btn, .search-button, .submit-btn {
+    background: linear-gradient(135deg, var(--vx-blue) 0%, var(--vx-blue-dark) 100%) !important;
+    border: none !important;
+}
+
+.add-btn:hover, .primary-button:hover, .btn-primary:hover, .add-button:hover,
+.save-btn:hover, .save-button:hover, .search-btn:hover, .search-button:hover,
+.submit-btn:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 10px 22px rgba(25, 118, 210, 0.32) !important;
+    filter: brightness(1.05);
+}
+
+.add-btn:active, .primary-button:active, .btn-primary:active, .add-button:active,
+.save-btn:active, .save-button:active, .search-btn:active, .search-button:active,
+.submit-btn:active {
+    transform: translateY(0) !important;
+    box-shadow: 0 2px 6px rgba(25, 118, 210, 0.26) !important;
+}
+
+.cancel-btn:hover, .cancel-button:hover, .clear-btn:hover, .clear-button:hover,
+.btn-secondary:hover {
+    transform: translateY(-1px) !important;
+    border-color: var(--vx-blue) !important;
+    color: var(--vx-blue) !important;
+    background: var(--vx-blue-light) !important;
+}
+
+.view-btn:hover, .view-button:hover, .btn-small:hover {
+    transform: translateY(-1px) !important;
+    background: var(--vx-blue-light) !important;
+    box-shadow: 0 4px 10px rgba(25, 118, 210, 0.18);
+}
+
+button:disabled, button:disabled:hover {
+    transform: none !important; box-shadow: none !important;
+    filter: none !important; cursor: not-allowed;
+}
+
+/* =========================================================
+   CARDS / SUMMARY TILES
+   Elevation on hover + a quiet glow per card
+========================================================= */
+
+.card, .summary-card, .system-box, .integration-card,
+.table-panel, .table-card, .table-container, .last-sync-card {
+    transition: transform .22s var(--vx-ease), box-shadow .22s var(--vx-ease),
+                border-color .22s var(--vx-ease) !important;
+    box-shadow: var(--vx-shadow-sm) !important;
+}
+
+.summary-card:hover, .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--vx-shadow-lg) !important;
+    border-color: #c7d7ea !important;
+}
+
+.system-box:hover { transform: translateY(-4px) !important; }
+
+.summary-card, .card.summary-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.summary-card::before {
+    content: "";
+    /* position: absolute;
+    top: -30px; right: -30px;
+    width: 90px; height: 90px;
+    border-radius: 50%; */
+    background: radial-gradient(circle, rgba(25,118,210,0.08), transparent 70%);
+    pointer-events: none;
+}
+
+/* =========================================================
+   TABLES
+========================================================= */
+
+th {
+    letter-spacing: 0.4px !important;
+}
+
+tbody tr {
+    transition: background-color .15s ease, box-shadow .15s ease;
+}
+
+tbody tr:hover {
+    box-shadow: inset 3px 0 0 var(--vx-blue);
+    background: var(--vx-blue-light) !important;
+}
+
+td:first-child, tbody td:first-child {
+    font-weight: 700 !important;
+}
+
+/* =========================================================
+   STATUS / CATEGORY BADGES - dot indicator + pop on hover
+========================================================= */
+
+.status, .status-badge, .connection-status, .category {
+    transition: transform .15s ease;
+    position: relative;
+    padding-left: 22px !important;
+}
+
+.status::before, .status-badge::before, .connection-status::before {
+    content: "";
+    position: absolute;
+    left: 10px; top: 50%;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    transform: translateY(-50%);
+    opacity: .85;
+}
+
+tr:hover .status, tr:hover .status-badge { transform: scale(1.05); }
+
+/* =========================================================
+   FORM FIELDS
+========================================================= */
+
+input, select, textarea {
+    transition: border-color .18s ease, box-shadow .18s ease !important;
+}
+
+input:hover, select:hover, textarea:hover {
+    border-color: #94b3d6 !important;
+}
+
+label { color: var(--vx-ink) !important; }
+
+/* =========================================================
+   MODALS
+========================================================= */
+
+.modal[style*="flex"] .modal-content,
+.modal[style*="display: flex"] .modal-content,
+.modal[style*="display:flex"] .modal-content {
+    animation: vxModalRise .25s var(--vx-ease);
+    box-shadow: var(--vx-shadow-lg) !important;
+}
+
+@keyframes vxModalRise {
+    from { opacity: 0; transform: translateY(14px) scale(.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.close-btn, .close-button {
+    transition: transform .18s ease, opacity .18s ease;
+}
+.close-btn:hover, .close-button:hover {
+    transform: rotate(90deg);
+    opacity: 0.8;
+}
+
+.modal-header, .modal-content > h2 {
+    background: linear-gradient(135deg, var(--vx-navy-3), var(--vx-navy)) !important;
+}
+
+/* =========================================================
+   EMPTY STATES
+========================================================= */
+
+.empty-title, .no-data > div:first-child {
+    color: var(--vx-ink) !important;
+}
+
+/* =========================================================
+   HERO (contact page, etc.)
+========================================================= */
+
+.hero {
+    background: linear-gradient(135deg, var(--vx-navy) 0%, var(--vx-navy-3) 55%, var(--vx-navy-2) 100%) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(600px 300px at 85% 20%, rgba(240, 180, 41, 0.14), transparent 60%);
+    pointer-events: none;
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    background: linear-gradient(180deg, var(--vx-navy) 0%, #0b1d38 100%) !important;
+}

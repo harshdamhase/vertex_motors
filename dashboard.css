@@ -1,0 +1,194 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6f8;
+    color: #20252b;
+}
+
+header {
+    background: #0f2747;
+    color: white;
+    padding: 18px 35px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+nav {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: #dbe2ea;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+nav a:hover,
+nav a.active {
+    color: white;
+    font-weight: bold;
+}
+
+main {
+    padding: 35px;
+}
+
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-header h1 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.page-header p {
+    color: #68717c;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e1e5e9;
+}
+
+.card h3 {
+    color: #68717c;
+    font-size: 14px;
+    margin-bottom: 12px;
+}
+
+.card h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.card span {
+    color: #7b8490;
+    font-size: 13px;
+}
+
+.content-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+}
+
+.panel {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #e1e5e9;
+}
+
+.panel h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid #e8ebee;
+    font-size: 14px;
+}
+
+th {
+    background: #f7f8fa;
+}
+
+.status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 12px;
+}
+
+.open {
+    background: #fff3cd;
+}
+
+.production {
+    background: #dbeafe;
+}
+
+.completed {
+    background: #dcfce7;
+}
+
+.integration-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #e8ebee;
+    font-size: 14px;
+}
+
+.connected {
+    color: #15803d;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    color: #7b8490;
+    font-size: 13px;
+}
+
+@media (max-width: 1000px) {
+
+    header {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    main {
+        padding: 20px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    nav {
+        justify-content: center;
+    }
+}
